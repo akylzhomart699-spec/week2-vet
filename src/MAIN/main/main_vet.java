@@ -3,7 +3,7 @@ package MAIN.main;
 public class main_vet {
     public static void main(String[] args) {
         // --- Create objects ---
-        Owner owner = new Owner("Islambek", 25, 101, "male");
+        Owner owner = new Owner("Maduro", 25, 101, "male");
         Veterinarian vet = new Veterinarian("Aigerim", 30, "female", "Surgery", 5);
         Pet pet = new Pet("Barsik", -3, "Persian", ""); // invalid values to show validation
         Service service = new Service("Vaccination", 1.5, "big", "calm", 5000f);
