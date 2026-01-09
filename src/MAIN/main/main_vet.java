@@ -2,49 +2,40 @@ package MAIN.main;
 
 public class main_vet {
     public static void main(String[] args) {
+        // --- Create objects ---
+        Owner owner = new Owner("Islambek", 25, 101, "male");
+        Veterinarian vet = new Veterinarian("Aigerim", 30, "female", "Surgery", 5);
+        Pet pet = new Pet("Barsik", -3, "Persian", ""); // invalid values to show validation
+        Service service = new Service("Vaccination", 1.5, "big", "calm", 5000f);
 
-        System.out.println("=== Vet Clinics Astana ===\n");
+        // --- Print all objects ---
+        System.out.println("=== Objects ===");
+        System.out.println(owner);
+        System.out.println(vet);
+        System.out.println(pet);
+        System.out.println(service);
 
-        Pat pet1 = new Pat("Rex", 7, "mongrel", "rabies");
-        Owner owner1 = new Owner("Trump", 25, 1, "Male");
-        Service service1 = new Service("Wash", 0.5, "big", "middle", 12000);
+        // --- Polymorphism demonstration ---
+        System.out.println("\n=== Polymorphism ===");
+        Person[] people = { owner, vet }; // one array for different child types
+        for (Person p : people) {
+            p.introduce(); // overridden differently in Owner and Veterinarian
+        }
 
-        System.out.println("--- INITIAL STATE ---");
-        System.out.println(pet1);
-        System.out.println(owner1);
-        System.out.println(service1);
-        System.out.println();
+        // --- Encapsulation (validation in setters) ---
+        System.out.println("\n=== Encapsulation (validation) ===");
+        owner.setId(-5); // invalid ID triggers validation
+        System.out.println("After invalid ID: " + owner);
 
-        System.out.println("--- TESTING GETTERS ---");
-        System.out.println("Pet name: " + pet1.getName());
-        System.out.println("Owner name: " + owner1.getName());
-        System.out.println("Service price: " + service1.getPrice());
-        System.out.println();
+        pet.setAge(-2); // invalid age triggers validation
+        System.out.println("After invalid age: " + pet);
 
-        System.out.println("--- TESTING SETTERS ---");
-        pet1.setProblem("injury");
-        owner1.setsex("Female");
-        service1.setprice(15000);
-
-        System.out.println("Updated pet: " + pet1);
-        System.out.println("Updated owner: " + owner1);
-        System.out.println("Updated service: " + service1);
-        System.out.println();
-
-        System.out.println("--- TESTING ADDITIONAL METHODS ---");
-        System.out.println("Pet decision: " + pet1.check_problem(pet1.getProblem()));
-        System.out.println("Pet selling: " + pet1.chek_sell());
-        System.out.println("Owner privilege: " + owner1.check_sex());
-        System.out.println("Queue status: " + owner1.check_sex2());
-        System.out.println("Service price type: " + service1.chek_size());
-        System.out.println("Discount applied: " + service1.apply_discount(owner1.getSex()));
-        System.out.println();
-
-        System.out.println("--- FINAL SUMMARY ---");
-        System.out.println(pet1);
-        System.out.println(owner1);
-        System.out.println(service1);
-
-        System.out.println("\n=== Program Complete ===");
+        // --- instanceof and downcasting ---
+        System.out.println("\n=== instanceof and downcasting ===");
+        if (owner instanceof Owner o) {
+            System.out.println("Found Owner: " + o.getFullName() + ", ID=" + o.getId());
+            System.out.println("checkSex: " + o.checkSex());
+            System.out.println("checkSex2: " + o.checkSex2());
+        }
     }
 }
