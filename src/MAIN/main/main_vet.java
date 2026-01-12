@@ -1,41 +1,73 @@
 package MAIN.main;
 
+import java.util.Scanner;
+
 public class main_vet {
     public static void main(String[] args) {
-        // --- Create objects ---
+        Scanner sc = new Scanner(System.in);
+
+        // Создание объектов
         Owner owner = new Owner("Maduro", 25, 101, "male");
         Veterinarian vet = new Veterinarian("Aigerim", 30, "female", "Surgery", 5);
-        Pet pet = new Pet("Barsik", -3, "Persian", ""); // invalid values to show validation
+        Pet pet = new Pet("Barsik", -3, "Persian", "");
         Service service = new Service("Vaccination", 1.5, "big", "calm", 5000f);
+        Person o1 = new Owner("Madara", 25, 101, "male");
 
-        // --- Print all objects ---
-        System.out.println("=== Objects ===");
-        System.out.println(owner);
-        System.out.println(vet);
-        System.out.println(pet);
-        System.out.println(service);
+        int choice;
 
-        // --- Polymorphism demonstration ---
-        System.out.println("\n=== Polymorphism ===");
-        Person[] people = { owner, vet }; // one array for different child types
-        for (Person p : people) {
-            p.introduce(); // overridden differently in Owner and Veterinarian
-        }
+        do {
+            System.out.println("\n=== MENU ===");
+            System.out.println("1. Show all objects");
+            System.out.println("2. Demonstrate polymorphism");
+            System.out.println("3. Test validation");
+            System.out.println("4. Downcasting demo");
+            System.out.println("0. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
 
-        // --- Encapsulation (validation in setters) ---
-        System.out.println("\n=== Encapsulation (validation) ===");
-        owner.setId(-5); // invalid ID triggers validation
-        System.out.println("After invalid ID: " + owner);
+            switch (choice) {
+                case 1:
+                    System.out.println("\n--- OBJECTS ---");
+                    System.out.println(owner);
+                    System.out.println(vet);
+                    System.out.println(pet);
+                    System.out.println(service);
+                    break;
 
-        pet.setAge(-2); // invalid age triggers validation
-        System.out.println("After invalid age: " + pet);
+                case 2:
+                    System.out.println("\n--- POLYMORPHISM ---");
+                    Person[] people = { owner, vet };
+                    for (Person p : people) {
+                        p.introduce(); // overridden
+                    }
+                    break;
 
-        // --- instanceof and downcasting ---
-        System.out.println("\n=== instanceof and downcasting ===");
-        if (owner instanceof Owner o) {
-            System.out.println("Found Owner: " + o.getFullName() + ", ID=" + o.getId());
-            System.out.println("checkSex: " + o.checkSex());
-            System.out.println("checkSex2: " + o.checkSex2());
-        }
+                case 3:
+                    System.out.println("\n--- VALIDATION TEST ---");
+                    owner.setId(-5);
+                    pet.setAge(-2);
+                    System.out.println("Owner after invalid ID: " + owner);
+                    System.out.println("Pet after invalid age: " + pet);
+                    break;
+
+                case 4:
+                    System.out.println("\n--- DOWNCASTING ---");
+                    if (owner instanceof Owner o) {
+
+                        System.out.println("Owner name: " + o1.getFullName());
+                        System.out.println("checkSex: " + o.checkSex());
+                        System.out.println("checkSex2: " + o.checkSex2());
+                    }
+                    break;
+
+                case 0:
+                    System.out.println("Exiting program...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+
+        } while (choice != 0);
     }
 }
