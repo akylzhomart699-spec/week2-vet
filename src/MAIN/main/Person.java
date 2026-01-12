@@ -1,68 +1,45 @@
 package MAIN.main;
 
-public class Person {
-    // Protected fields: accessible in child classes but hidden from outside
+public abstract class Person {
     protected String fullName;
     protected int age;
-    protected String gender; // extra field for demonstration
+    protected String gender;
 
-    // Constructor with parameters
-    public Person(String fullName, int age, String gender) {
-        setFullName(fullName);   // validation inside setter
-        setAge(age);             // validation inside setter
-        setGender(gender);       // validation inside setter
+    public Person(String fullName, int age, String gender) throws InvalidInputException {
+        setFullName(fullName);
+        setAge(age);
+        setGender(gender);
     }
 
-    // Default constructor
     public Person() {
-        this.fullName = "Unknown Person"; // default name
-        this.age = 0;                     // default age
-        this.gender = "Unknown";          // default gender
+        this.fullName = "Unknown";
+        this.age = 0;
+        this.gender = "Unknown";
     }
 
-    // Getters: allow controlled access to protected fields
-    public String getFullName() { return fullName; }
-    public int getAge() { return age; }
-    public String getGender() { return gender; }
-
-    // Setters with validation logic
-    public void setFullName(String fullName) {
-        // Name cannot be empty
-        if (fullName != null && !fullName.isEmpty()) {
-            this.fullName = fullName;
-        } else {
-            System.out.println("Error: Name cannot be empty!");
-            this.fullName = "Unknown Person"; // fallback value
+    public void setFullName(String fullName) throws InvalidInputException {
+        if (fullName == null || fullName.trim().isEmpty()) {
+            throw new InvalidInputException("Name cannot be empty!");
         }
+        this.fullName = fullName;
     }
 
-    public void setAge(int age) {
-        // Age must be non-negative, otherwise set to 0
-        if (age >= 0) {
-            this.age = age;
-        } else {
-            System.out.println("Error: Age cannot be negative! Setting to 0.");
-            this.age = 0;
+    public void setAge(int age) throws InvalidInputException {
+        if (age < 0) {
+            throw new InvalidInputException("Age cannot be negative!");
         }
+        this.age = age;
     }
 
-    public void setGender(String gender) {
-        // Gender cannot be empty
-        if (gender != null && !gender.isEmpty()) {
-            this.gender = gender;
-        } else {
-            System.out.println("Error: Gender cannot be empty!");
-            this.gender = "Unknown"; // fallback value
+    public void setGender(String gender) throws InvalidInputException {
+        if (gender == null || gender.trim().isEmpty()) {
+            throw new InvalidInputException("Gender cannot be empty!");
         }
+        this.gender = gender;
     }
 
-    // Extra method for demonstration
-    public void introduce() {
-        System.out.println("Hello, my name is " + fullName +
-                ", I am " + age + " years old, gender: " + gender + ".");
-    }
+    public abstract void introduce();
 
-    // toString method: returns object info in readable format
     @Override
     public String toString() {
         return "Person{Name='" + fullName + "', Age=" + age + ", Gender='" + gender + "'}";
