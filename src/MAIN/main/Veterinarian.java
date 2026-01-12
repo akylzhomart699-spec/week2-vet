@@ -1,68 +1,55 @@
 package MAIN.main;
 
-public class Veterinarian extends Person {
-    // Private fields specific to Veterinarian
-    private String specialization;   // e.g. "Surgery", "Dentistry"
-    private int experienceYears;     // years of practice
-    private double totalBonus;       // bonus earned from services
+public class Veterinarian extends Person implements Treatable {
+    private String specialization;
+    private int experienceYears;
+    private double totalBonus;
 
-    // Constructor with parameters
-    public Veterinarian(String fullName, int age, String gender, String specialization, int experienceYears) {
-        super(fullName, age, gender); // call parent constructor
+    public Veterinarian(String fullName, int age, String gender, String specialization, int experienceYears) throws InvalidInputException {
+        super(fullName, age, gender);
+        setSpecialization(specialization);
+        setExperienceYears(experienceYears);
+        this.totalBonus = 0;
+    }
+
+    public void setSpecialization(String specialization) throws InvalidInputException {
+        if (specialization == null || specialization.trim().isEmpty()) {
+            throw new InvalidInputException("Specialization cannot be empty!");
+        }
         this.specialization = specialization;
-        setExperienceYears(experienceYears); // validation inside setter
-        this.totalBonus = 0;
     }
 
-    // Default constructor
-    public Veterinarian() {
-        super(); // calls default constructor of Person
-        this.specialization = "General";
-        this.experienceYears = 0;
-        this.totalBonus = 0;
-    }
-
-    // Getters
-    public String getSpecialization() { return specialization; }
-    public int getExperienceYears() { return experienceYears; }
-    public double getTotalBonus() { return totalBonus; }
-
-    // Setters with validation
-    public void setSpecialization(String specialization) {
-        if (specialization != null && !specialization.isEmpty()) {
-            this.specialization = specialization;
-        } else {
-            System.out.println("Error: Specialization cannot be empty!");
-            this.specialization = "General";
+    public void setExperienceYears(int experienceYears) throws InvalidInputException {
+        if (experienceYears < 0) {
+            throw new InvalidInputException("Experience cannot be negative!");
         }
+        this.experienceYears = experienceYears;
     }
 
-    public void setExperienceYears(int experienceYears) {
-        if (experienceYears >= 0) {
-            this.experienceYears = experienceYears;
-        } else {
-            System.out.println("Error: Experience cannot be negative! Setting to 0.");
-            this.experienceYears = 0;
+    public void addServiceBonus(double amount) throws InvalidInputException {
+        if (amount <= 0) {
+            throw new InvalidInputException("Bonus must be positive!");
         }
+        totalBonus += amount;
     }
 
-    // Method to add bonus from completed services
-    public void addServiceBonus(double amount) {
-        if (amount > 0) {
-            totalBonus += amount;
-        } else {
-            System.out.println("Error: Bonus amount must be positive!");
-        }
+    @Override
+    public void introduce() {
+        System.out.println("Veterinarian " + fullName + " specializes in " + specialization + ".");
     }
 
-    // toString method for readable output
+    @Override
+    public void treat(Pet pet) {
+        System.out.println("Veterinarian " + fullName + " treats pet " + pet.getName());
+    }
+
     @Override
     public String toString() {
-        return "Veterinarian{Name='" + fullName +
-                "', Age=" + age +
-                ", Gender='" + gender +
-                "', Specialization='" + specialization +
-                "', ExperienceYears=" + experienceYears +
+        return "Veterinarian{Name='" + fullName + "', Age=" + age + ", Gender='" + gender +
+                "', Specialization='" + specialization + "', ExperienceYears=" + experienceYears +
                 ", TotalBonus=$" + totalBonus + "}";
     }
 }
+
+
+
