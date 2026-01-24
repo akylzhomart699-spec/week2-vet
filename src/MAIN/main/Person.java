@@ -1,5 +1,8 @@
 package MAIN.main;
 
+import MAIN.exception.InvalidInputException;
+
+
 public abstract class Person {
     protected String fullName;
     protected int age;

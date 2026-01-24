@@ -1,5 +1,8 @@
 package MAIN.main;
 
+import MAIN.exception.InvalidInputException;
+
+
 public class Pet {
     private String name;
     private String type;

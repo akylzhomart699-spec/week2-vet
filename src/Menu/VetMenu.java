@@ -1,7 +1,14 @@
-package MAIN.main;
+package Menu;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import MAIN.exception.InvalidInputException;
+import MAIN.main.Owner;
+import MAIN.main.Person;
+import MAIN.main.Veterinarian;
+import Menu.Menu;
+
+
 
 public class VetMenu implements Menu {
     private ArrayList<Person> people;
@@ -33,24 +40,29 @@ public class VetMenu implements Menu {
         boolean running = true;
         while (running) {
             displayMenu();
-            System.out.print("Enter choice: ");
+            System.out.println("Enter you choise");
             try {
-                int choice = scanner.nextInt();
+                int choise = scanner.nextInt();
+                scanner .nextLine();
+                switch (choise) {
+                    case 1 -> showAll()
+                    ;
+                    case 2 ->demonstratePolymorphism()
+                    ;
+                    case 3 -> addOwner()
+                    ;
+                    case 0 -> running = false
+                    ;
+                    default -> System.out.println("Eror");
+                }
+            }catch (Exception e){
+                System.out.println("Eror" + e.getMessage());
                 scanner.nextLine();
 
-                switch (choice) {
-                    case 1 -> showAll();
-                    case 2 -> demonstratePolymorphism();
-                    case 3 -> addOwner();
-                    case 0 -> running = false;
-                    default -> System.out.println("Invalid choice!");
-                }
-            } catch (Exception e) {
-                System.out.println(" Error: " + e.getMessage());
-                scanner.nextLine();
             }
+            scanner.close();
         }
-        scanner.close();
+
     }
 
     private void showAll() {
@@ -65,21 +77,20 @@ public class VetMenu implements Menu {
         }
     }
 
+
     private void addOwner() {
         try {
             System.out.print("Enter name: ");
             String name = scanner.nextLine();
 
             System.out.print("Enter age: ");
-            int age = scanner.nextInt();
-            scanner.nextLine();
+            int age = Integer.parseInt(scanner.nextLine());
 
             System.out.print("Enter gender: ");
             String gender = scanner.nextLine();
 
             System.out.print("Enter ID: ");
-            int id = scanner.nextInt();
-            scanner.nextLine();
+            int id = Integer.parseInt(scanner.nextLine());
 
             Owner newOwner = new Owner(name, age, id, gender);
             people.add(newOwner);
@@ -87,11 +98,13 @@ public class VetMenu implements Menu {
 
         } catch (InvalidInputException e) {
             System.out.println(" Error: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println(" General error: " + e.getMessage());
-            scanner.nextLine();
+        } catch (NumberFormatException e) {
+            System.out.println(" Please enter valid numeric values for age and ID!");
         }
     }
+
+
 }
+
 
 

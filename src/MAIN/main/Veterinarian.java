@@ -1,4 +1,6 @@
 package MAIN.main;
+import MAIN.exception.InvalidInputException;
+
 
 public class Veterinarian extends Person implements Treatable {
     private String specialization;
