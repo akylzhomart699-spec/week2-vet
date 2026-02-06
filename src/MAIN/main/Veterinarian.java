@@ -1,5 +1,8 @@
 package MAIN.main;
 import MAIN.exception.InvalidInputException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+
 
 
 public class Veterinarian extends Person implements Treatable {
